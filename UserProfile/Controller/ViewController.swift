@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, segueEditView {
    
@@ -15,36 +17,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     var userArray : [User] = [User]()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
         userProfileTableView.delegate = self
         userProfileTableView.dataSource = self
-        
+       
         userProfileTableView.register(UINib(nibName: "TableViewCell", bundle: nil),forCellReuseIdentifier:"TableViewCell")
         configureTableView()
         userProfileTableView.separatorStyle = .none
-        retrieveMessages()
         
-        var user = User()
-        user.name = "Bhavesh"
-        user.userId = "2500"
-        userArray.append(user)
-        var user2 = User()
-        user2.name = "Brijesh"
-        user2.userId = "2515"
-        userArray.append(user2)
-        
-        
-        print("View Controller view lod method is called-------------")
-        
+        print("---View Controller view did load method is called")
+     
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("------view Appear method is called")
+        print("--view Controller view Appear method is called---")
+        retrieveMessages()
     }
     
 
@@ -74,6 +70,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func retrieveMessages(){
+        userArray =  getAllUser()
         userProfileTableView.reloadData();
     }
     
@@ -108,7 +105,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         performSegue(withIdentifier: "goToForm", sender: self)
     }
     
+    // DB Management func
     
+    func getAllUser()->[User]{
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
+        request.returnsObjectsAsFaults = false
+        var userDetail : [User] = [User]()
+        do {
+           let result = try context.fetch(request)
+           for data in result as! [NSManagedObject] {
+                let user = UserDetail()
+                user.name = data.value(forKey: "name") as! String
+                user.userId = data.value(forKey: "userId") as! String
+                userDetail.append(user)
+            }
+        } catch {
+           print("Failed")
+            
+         }
+        return userDetail
+    }
     
 }
 

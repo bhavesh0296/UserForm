@@ -115,6 +115,12 @@
                         <viewLayoutGuide key="safeArea" id="6vy-wV-S5l"/>
                     </view>
                     <navigationItem key="navigationItem" title="User Detail" id="LdP-m8-mBG"/>
+                    <connections>
+                        <outlet property="addressLabel" destination="B8H-rm-g3S" id="Kxc-fj-yQx"/>
+                        <outlet property="emailLabel" destination="jOy-bi-Rcc" id="VvL-d9-ELE"/>
+                        <outlet property="nameLabel" destination="fog-oP-NDS" id="oKr-de-tSD"/>
+                        <outlet property="phoneLabel" destination="WXS-7n-sPm" id="Ma8-tm-Lfm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Kq-gI-Wo2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

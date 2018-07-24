@@ -28,7 +28,7 @@ class FormViewController: UIViewController {
     @IBOutlet weak var buttonForm: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("form segue called")
+        print("--form sview view did load is called --")
         print(user.name, user.userId)
         if isFormFilled {
             isFormFilled = !isFormFilled
@@ -89,7 +89,7 @@ class FormViewController: UIViewController {
         
         if result {
             print("user added")
-            //userId = userId + 1
+           
         }else{
             print("user additin failed")
         }
@@ -111,15 +111,11 @@ class FormViewController: UIViewController {
     }
     
     
-    func filledDetails(){
-        print("filled details method is called")
-        
-    }
-    
     
     
     //DB Management methods
     func saveUserDetail( userDetail : UserDetail)-> Bool{
+        print("--save userdetail method is called--")
         let context = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Profile", in: context)
         let newUser = NSManagedObject(entity: entity!, insertInto: context)
@@ -138,7 +134,7 @@ class FormViewController: UIViewController {
     }
     
     func updateUserDetail(userDetail:UserDetail)->Bool{
-        print("update userDetail method is called")
+        print("--update userDetail method is called--")
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
         request.predicate = NSPredicate(format: "userId = %@", user.userId)

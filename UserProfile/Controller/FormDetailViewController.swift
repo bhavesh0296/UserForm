@@ -23,7 +23,7 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var addressLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-         print("view segue called", user.name, " ----")
+         print("--view segue called", user.name, " ---")
         print(user.name, user.userId)
         
         if isView {
@@ -38,8 +38,9 @@ class FormDetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     func filledDetails(){
-        print("filled details method is called")
+        print("--filled details method is called--")
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
         request.predicate = NSPredicate(format: "userId = %@", user.userId)

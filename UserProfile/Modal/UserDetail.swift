@@ -9,4 +9,6 @@ class UserDetail: User {
     var address : String!
     var phone : String!
     var email: String!
+    var gender : String!
+    var DOB : String!
 }

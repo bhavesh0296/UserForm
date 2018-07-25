@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import DLRadioButton
 
 class FormViewController: UIViewController {
     
@@ -17,6 +18,9 @@ class FormViewController: UIViewController {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    @IBOutlet weak var maleBtn: DLRadioButton!
+    
+    @IBOutlet weak var femaleBtn: DLRadioButton!
     
     
     
@@ -36,6 +40,7 @@ class FormViewController: UIViewController {
         }
 
         // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,6 +63,14 @@ class FormViewController: UIViewController {
                 addressField.text = data.value(forKey: "address") as? String
                 emailField.text = data.value(forKey: "email") as? String
                 print(data.value(forKey: "name") as! String)
+                if data.value(forKey: "gender") as? String == "male" {
+                    maleBtn.sendActions(for: .touchUpInside)
+                    print("male action")
+                }else if data.value(forKey: "gender") as? String == "female"{
+                    femaleBtn.sendActions(for: .touchUpInside)
+                    print("femlae action")
+                }
+                
             }
         } catch {
             print("Failed")
@@ -73,6 +86,18 @@ class FormViewController: UIViewController {
         userDetail.address  = addressField.text
         userDetail.email = emailField.text
         userDetail.phone = phoneField.text
+        
+        var gender = maleBtn.selected()
+        if gender?.tag == 1 {
+           userDetail.gender = "male"
+        }else if gender?.tag == 2{
+            userDetail.gender = "female"
+        }else {
+            userDetail.gender = ""
+        }
+        print("---",userDetail.gender,"-----")
+        
+        
         var result = false
         print(">>>",user.userId,"<<<")
         if  user.userId == ""{
@@ -97,6 +122,13 @@ class FormViewController: UIViewController {
         
         
     }
+    
+    
+    
+    
+    
+    
+    
     
     func generateRandomDigits(_ digitNumber: Int) -> String {
         var number = ""
@@ -124,6 +156,7 @@ class FormViewController: UIViewController {
         newUser.setValue(userDetail.address, forKey: "address")
         newUser.setValue(userDetail.email, forKey: "email")
         newUser.setValue(userDetail.phone, forKey:"phone")
+        newUser.setValue(userDetail.gender, forKey:"gender")
         do {
             try context.save()
             return true
@@ -146,6 +179,7 @@ class FormViewController: UIViewController {
                 data.setValue(userDetail.phone, forKey:"phone")
                 data.setValue(userDetail.address, forKey: "address")
                 data.setValue(userDetail.email, forKey: "email")
+                data.setValue(userDetail.gender, forKey: "gender")
                 print(data.value(forKey: "name") as! String)
             }
             try context.save()

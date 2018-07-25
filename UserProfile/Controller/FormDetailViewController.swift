@@ -18,6 +18,8 @@ class FormDetailViewController: UIViewController {
     
     @IBOutlet weak var nameLabel: UILabel!
     
+    @IBOutlet weak var genderLabel: UILabel!
+    
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
@@ -52,12 +54,14 @@ class FormDetailViewController: UIViewController {
                 phoneLabel.text = data.value(forKey: "phone") as? String
                 addressLabel.text = data.value(forKey: "address") as? String
                 emailLabel.text = data.value(forKey: "email") as? String
+                genderLabel.text = data.value(forKey: "gender") as? String
                 print(data.value(forKey: "name") as! String)
             }
         } catch {
             print("Failed")
             
         }
+        
     }
     
 

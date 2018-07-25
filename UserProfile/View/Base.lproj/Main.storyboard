@@ -18,14 +18,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U8n-By-lgt">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U8n-By-lgt">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="sectionIndexBackgroundColor" red="1" green="0.38653356872572087" blue="0.2942185673346579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.91428491099999998" green="1" blue="0.52149716059999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="U8n-By-lgt" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ArF-hb-GZ1"/>
+                            <constraint firstItem="U8n-By-lgt" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Vj3-0G-4SB"/>
+                            <constraint firstItem="U8n-By-lgt" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ZdC-Eb-r6g"/>
+                            <constraint firstItem="U8n-By-lgt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="iqW-dC-Jtc"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="User Profile" id="Whm-5U-h5S">
@@ -147,6 +151,7 @@
                     <connections>
                         <outlet property="addressLabel" destination="B8H-rm-g3S" id="Kxc-fj-yQx"/>
                         <outlet property="emailLabel" destination="jOy-bi-Rcc" id="VvL-d9-ELE"/>
+                        <outlet property="genderLabel" destination="utm-ik-wEq" id="BCc-vM-Q5g"/>
                         <outlet property="nameLabel" destination="fog-oP-NDS" id="oKr-de-tSD"/>
                         <outlet property="phoneLabel" destination="WXS-7n-sPm" id="Ma8-tm-Lfm"/>
                     </connections>
@@ -252,6 +257,24 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qy5-Wd-8op" customClass="DLRadioButton">
+                                <rect key="frame" x="286" y="335" width="79" height="49"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Female">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0vO-Ml-haZ" customClass="DLRadioButton">
+                                <rect key="frame" x="145" y="333" width="65" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Male">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <outletCollection property="otherButtons" destination="qy5-Wd-8op" id="hL0-wn-aFm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.91428491099999998" green="1" blue="0.52149716059999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="ZmL-Mw-CHU"/>
@@ -261,6 +284,8 @@
                         <outlet property="addressField" destination="7VD-ZZ-gIv" id="Rbm-Ss-FAa"/>
                         <outlet property="buttonForm" destination="4gl-1s-xHS" id="Sxn-eh-oYX"/>
                         <outlet property="emailField" destination="Rnd-DM-0F5" id="xOF-Rt-8RG"/>
+                        <outlet property="femaleBtn" destination="qy5-Wd-8op" id="1r6-gM-QGy"/>
+                        <outlet property="maleBtn" destination="0vO-Ml-haZ" id="mtS-jD-hkG"/>
                         <outlet property="nameField" destination="qlt-DO-TPI" id="sAY-V2-yJd"/>
                         <outlet property="phoneField" destination="ig9-0m-SRy" id="bIQ-gn-9hw"/>
                     </connections>

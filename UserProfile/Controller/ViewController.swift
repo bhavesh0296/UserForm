@@ -64,7 +64,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //TODO: Declare configureTableView here:
     func configureTableView(){
         userProfileTableView.rowHeight = UITableViewAutomaticDimension
-        userProfileTableView.estimatedRowHeight = 120
+        userProfileTableView.estimatedRowHeight = 150
         
         
     }
@@ -110,6 +110,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func getAllUser()->[User]{
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
+        request.propertiesToFetch = ["name","userId"]
         request.returnsObjectsAsFaults = false
         var userDetail : [User] = [User]()
         do {

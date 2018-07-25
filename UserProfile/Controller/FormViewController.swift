@@ -14,15 +14,16 @@ class FormViewController: UIViewController {
     
     var user : User = User()
     var isFormFilled: Bool = false
-    //var userId : Int = 2500
-    
+ 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     @IBOutlet weak var maleBtn: DLRadioButton!
     
     @IBOutlet weak var femaleBtn: DLRadioButton!
+    var datePicker: UIDatePicker! = UIDatePicker()
     
     
+    @IBOutlet weak var dobField: UITextField!
     
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var addressField: UITextField!
@@ -40,6 +41,10 @@ class FormViewController: UIViewController {
         }
 
         // Do any additional setup after loading the view.
+        
+        dobField.inputView=datePicker
+        datePicker.datePickerMode = .date
+        datePicker.addTarget(self, action: #selector(FormViewController.getSelectedDate), for: UIControlEvents.valueChanged)
         
     }
 
@@ -62,6 +67,7 @@ class FormViewController: UIViewController {
                 phoneField.text = data.value(forKey: "phone") as? String
                 addressField.text = data.value(forKey: "address") as? String
                 emailField.text = data.value(forKey: "email") as? String
+                dobField.text = data.value(forKey: "dob") as? String
                 print(data.value(forKey: "name") as! String)
                 if data.value(forKey: "gender") as? String == "male" {
                     maleBtn.sendActions(for: .touchUpInside)
@@ -86,7 +92,7 @@ class FormViewController: UIViewController {
         userDetail.address  = addressField.text
         userDetail.email = emailField.text
         userDetail.phone = phoneField.text
-        
+        userDetail.DOB = dobField.text
         var gender = maleBtn.selected()
         if gender?.tag == 1 {
            userDetail.gender = "male"
@@ -96,6 +102,8 @@ class FormViewController: UIViewController {
             userDetail.gender = ""
         }
         print("---",userDetail.gender,"-----")
+        
+        print("---",dobField.text,"---")
         
         
         var result = false
@@ -157,6 +165,7 @@ class FormViewController: UIViewController {
         newUser.setValue(userDetail.email, forKey: "email")
         newUser.setValue(userDetail.phone, forKey:"phone")
         newUser.setValue(userDetail.gender, forKey:"gender")
+        newUser.setValue(userDetail.DOB, forKey: "dob" )
         do {
             try context.save()
             return true
@@ -180,6 +189,7 @@ class FormViewController: UIViewController {
                 data.setValue(userDetail.address, forKey: "address")
                 data.setValue(userDetail.email, forKey: "email")
                 data.setValue(userDetail.gender, forKey: "gender")
+                data.setValue(userDetail.DOB, forKey: "dob")
                 print(data.value(forKey: "name") as! String)
             }
             try context.save()
@@ -190,6 +200,22 @@ class FormViewController: UIViewController {
         }
        
     }
+    
+    
+    
+    @objc func getSelectedDate(sender:UIDatePicker){
+        
+        let dateFormet = DateFormatter()
+        
+        dateFormet.dateStyle = DateFormatter.Style.short
+        
+        dateFormet.timeStyle = DateFormatter.Style.none
+        
+        dobField.text = dateFormet.string(from: (sender.date))
+        
+        
+    }
+
     
     
     

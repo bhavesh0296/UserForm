@@ -15,6 +15,7 @@ class FormDetailViewController: UIViewController {
     var isView : Bool!
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    @IBOutlet weak var dobLabel: UILabel!
     
     @IBOutlet weak var nameLabel: UILabel!
     
@@ -55,6 +56,7 @@ class FormDetailViewController: UIViewController {
                 addressLabel.text = data.value(forKey: "address") as? String
                 emailLabel.text = data.value(forKey: "email") as? String
                 genderLabel.text = data.value(forKey: "gender") as? String
+                dobLabel.text = data.value(forKey: "dob") as? String
                 print(data.value(forKey: "name") as! String)
             }
         } catch {

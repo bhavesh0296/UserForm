@@ -129,13 +129,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DOB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aj-Gh-yf6">
-                                <rect key="frame" x="151" y="403" width="193" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B8H-rm-g3S">
                                 <rect key="frame" x="151" y="162" width="208" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -143,13 +136,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DOB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aj-Gh-yf6">
+                                <rect key="frame" x="151" y="407" width="193" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.91428491099999998" green="1" blue="0.52149716059999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6vy-wV-S5l"/>
                     </view>
                     <navigationItem key="navigationItem" title="User Detail" id="LdP-m8-mBG"/>
                     <connections>
                         <outlet property="addressLabel" destination="B8H-rm-g3S" id="Kxc-fj-yQx"/>
+                        <outlet property="dobLabel" destination="8aj-Gh-yf6" id="pFs-6u-PgB"/>
                         <outlet property="emailLabel" destination="jOy-bi-Rcc" id="VvL-d9-ELE"/>
                         <outlet property="genderLabel" destination="utm-ik-wEq" id="BCc-vM-Q5g"/>
                         <outlet property="nameLabel" destination="fog-oP-NDS" id="oKr-de-tSD"/>
@@ -283,6 +284,7 @@
                     <connections>
                         <outlet property="addressField" destination="7VD-ZZ-gIv" id="Rbm-Ss-FAa"/>
                         <outlet property="buttonForm" destination="4gl-1s-xHS" id="Sxn-eh-oYX"/>
+                        <outlet property="dobField" destination="bh9-Kj-gBh" id="3IR-h6-ffs"/>
                         <outlet property="emailField" destination="Rnd-DM-0F5" id="xOF-Rt-8RG"/>
                         <outlet property="femaleBtn" destination="qy5-Wd-8op" id="1r6-gM-QGy"/>
                         <outlet property="maleBtn" destination="0vO-Ml-haZ" id="mtS-jD-hkG"/>
@@ -314,6 +316,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="maV-BY-RWp"/>
+        <segue reference="XA0-l3-Ktf"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -14,17 +14,13 @@ class FormViewController: UIViewController {
     
     var user : User = User()
     var isFormFilled: Bool = false
+    var datePicker: UIDatePicker! = UIDatePicker()
  
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     @IBOutlet weak var maleBtn: DLRadioButton!
-    
     @IBOutlet weak var femaleBtn: DLRadioButton!
-    var datePicker: UIDatePicker! = UIDatePicker()
-    
-    
     @IBOutlet weak var dobField: UITextField!
-    
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var addressField: UITextField!
     @IBOutlet weak var emailField: UITextField!
@@ -33,7 +29,7 @@ class FormViewController: UIViewController {
     @IBOutlet weak var buttonForm: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("--form sview view did load is called --")
+        print("--form view view did load is called --")
         print(user.name, user.userId)
         if isFormFilled {
             isFormFilled = !isFormFilled
@@ -207,7 +203,7 @@ class FormViewController: UIViewController {
         
         let dateFormet = DateFormatter()
         
-        dateFormet.dateStyle = DateFormatter.Style.short
+        dateFormet.dateStyle = DateFormatter.Style.full
         
         dateFormet.timeStyle = DateFormatter.Style.none
         

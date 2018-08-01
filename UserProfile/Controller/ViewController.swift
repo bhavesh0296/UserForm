@@ -7,21 +7,13 @@
 //
 
 import UIKit
-import CoreData
 
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, segueEditView {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
    
-
     @IBOutlet weak var userProfileTableView: UITableView!
     
-    
-    var userArray : [User] = [User]()
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
-    
-    
-    
+    var presenter : ViewPresenter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +26,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         userProfileTableView.separatorStyle = .none
         
         print("---View Controller view did load method is called")
-     
+        presenter = ViewPresenter(delegate:self)
+      
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,14 +44,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
-        cell.cellLabel.text = userArray[indexPath.row].name
-        cell.userId = userArray[indexPath.row].userId
-        cell.delegate = self
+        cell.cellLabel.text = userDetailArray[indexPath.row].name
+        cell.userId = indexPath.row
+        cell.delegate = self as NavigationEditViewDelegate
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userArray.count
+        return userDetailArray.count
     }
     
     //TODO: Declare configureTableView here:
@@ -69,64 +62,55 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    func retrieveMessages(){
-        userArray =  getAllUser()
-        userProfileTableView.reloadData();
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool
+    {
+        return true
     }
     
-   
     
-    func editSegue(user dataobject: AnyObject) {
-        self.performSegue(withIdentifier: "goToEdit", sender:dataobject )
-    }
-    
-    func viewSegue(user dataObject: AnyObject) {
-        self.performSegue(withIdentifier: "goToView", sender:dataObject )
-    }
-  
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "goToEdit") {
-            let secondViewController = segue.destination as! FormViewController
-            let user = sender as! User
-            secondViewController.user = user
-            secondViewController.isFormFilled = true
-        }else if(segue.identifier == "goToView") {
-            let secondViewController = segue.destination as! FormDetailViewController
-            let user = sender as! User
-            secondViewController.user = user
-            secondViewController.isView = true
-         }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            userDetailArray.remove(at: indexPath.row)
+            //            userProfileTableView.deleteRows(at: [indexPath], with: .top)
+            userProfileTableView.reloadData()
+        }
         
     }
     
+    
+    func retrieveMessages(){
+       userProfileTableView.reloadData();
+    }
+    
     @IBAction func goToFormAction(_ sender: Any) {
-        print("gotoFormSegue")
-        performSegue(withIdentifier: "goToForm", sender: self)
+        presenter?.moveToEdit(user: nil)
+    }
+}
+
+extension ViewController : NavigationEditViewDelegate{
+    
+    func editNavigation(user : UserDetail) {
+        presenter?.moveToEdit(user: user)
     }
     
-    // DB Management func
+    func viewNavigation(user : UserDetail) {
+        presenter?.moveToView(user: user)
+        
+    }
+}
+
+extension ViewController : ViewControllerDelegate {
     
-    func getAllUser()->[User]{
-        let context = appDelegate.persistentContainer.viewContext
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
-        request.propertiesToFetch = ["name","userId"]
-        request.returnsObjectsAsFaults = false
-        var userDetail : [User] = [User]()
-        do {
-           let result = try context.fetch(request)
-           for data in result as! [NSManagedObject] {
-                let user = UserDetail()
-                user.name = data.value(forKey: "name") as! String
-                user.userId = data.value(forKey: "userId") as! String
-                userDetail.append(user)
-            }
-        } catch {
-           print("Failed")
-            
-         }
-        return userDetail
+    func goToEdit(user : UserDetail?) {
+        let myVC = storyboard?.instantiateViewController(withIdentifier: "FormViewController") as! FormViewController
+        myVC.user = user
+        navigationController?.pushViewController(myVC, animated: true)
     }
     
+    func gotoView(user : UserDetail) {
+        let myVC = storyboard?.instantiateViewController(withIdentifier: "FormDetailViewController") as! FormDetailViewController
+        myVC.user = user
+        navigationController?.pushViewController(myVC, animated: true)
+    }
 }
 

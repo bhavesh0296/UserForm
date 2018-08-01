@@ -8,18 +8,20 @@
 
 import UIKit
 
-protocol segueEditView {
-    func editSegue(user dataobject: AnyObject)
-    func viewSegue(user dataObject: AnyObject)
+protocol NavigationEditViewDelegate :class {
+    func editNavigation(user: UserDetail)
+    func viewNavigation(user: UserDetail)
 }
 
 class TableViewCell: UITableViewCell {
 
     
-     var delegate:segueEditView!
+    var delegate : NavigationEditViewDelegate?
     
     @IBOutlet weak var cellLabel: UILabel!
-    var userId : String = "" 
+    
+    var userId : Int?  
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -27,30 +29,24 @@ class TableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     @IBAction func editAction(_ sender: Any) {
-        print("Edit Action", userId)
-        var user = getUser()
-        if(self.delegate != nil){ //Just to be safe.
-            self.delegate.editSegue(user : user)
+        print("Edit Action", userId!)
+        if(self.delegate != nil){
+            self.delegate?.editNavigation(user : getUser())
         }
         
     }
     
     @IBAction func viewAction(_ sender: Any) {
-        print("View Action", userId)
-        var user = getUser()
-        print("view method", user.name)
-        if(self.delegate != nil){ //Just to be safe.
-            self.delegate.viewSegue(user : user)
-        }
+        print("View Action", userId!)
+            self.delegate?.viewNavigation(user : getUser())
+        
     }
     
-    func getUser() -> User {
-        var user = User();
+    func getUser() -> UserDetail {
+        var user = UserDetail();
         user.name = cellLabel.text!
         user.userId = userId
         return user

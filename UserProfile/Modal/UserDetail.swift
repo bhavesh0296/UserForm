@@ -5,6 +5,7 @@
 //  Created by Daffodilmac-10 on 23/07/18.
 //  Copyright © 2018 Daffodilmac-10. All rights reserved.
 //
+import UIKit
 var userDetailArray : [UserDetail] = [UserDetail]()
 class UserDetail {
     var name : String! 
@@ -14,4 +15,5 @@ class UserDetail {
     var email: String!
     var gender : String!
     var dob : String!
+    var userImage : UIImage!
 }

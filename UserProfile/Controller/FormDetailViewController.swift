@@ -18,6 +18,7 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var userImage: UIImageView!
     
     
 
@@ -45,5 +46,6 @@ extension FormDetailViewController : FormDetailViewDelegate{
         dobLabel.text = userDetailArray[(user?.userId)!].dob
         emailLabel.text = userDetailArray[(user?.userId)!].email
         addressLabel.text = userDetailArray[(user?.userId)!].address
+        userImage.image = userDetailArray[(user?.userId)!].userImage
     }
 }

@@ -11,10 +11,13 @@ protocol FormViewDelegate:class {
     func success()
     func failed (message:String)
     func prefilledUserDetail()
+    func popImagePicker()
+    func setUserImage(chosenImage : UIImage?)
 }
 
 
-import Foundation
+//import Foundation
+import UIKit
 class FormViewPresenter{
     
    weak var delegate : FormViewDelegate?
@@ -49,12 +52,21 @@ class FormViewPresenter{
         }
     }
     
-    func getUser(name:String?, address:String?, userId : Int?)->UserDetail{
+    func getUser(name:String?, address:String?, userId : Int? , userImage : UIImage?)->UserDetail{
         let user = UserDetail()
         user.name = name
         user.address = address
         user.userId = userId
+        user.userImage = userImage
         return user
+    }
+    
+    func showImagePicker(){
+        delegate?.popImagePicker()
+    }
+    
+    func userImage(chosenImage: UIImage?){
+        delegate?.setUserImage(chosenImage: chosenImage)
     }
     
 }

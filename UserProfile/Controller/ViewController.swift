@@ -1,52 +1,38 @@
-//
-//  ViewController.swift
-//  UserProfile
-//
-//  Created by Daffodilmac-10 on 23/07/18.
-//  Copyright © 2018 Daffodilmac-10. All rights reserved.
-//
-
 import UIKit
-
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
    
     @IBOutlet weak var userProfileTableView: UITableView!
     
-    var presenter : ViewPresenter?
+    var presenter : ViewPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        intialSetup()
+    }
+    
+    func intialSetup(){
         userProfileTableView.delegate = self
         userProfileTableView.dataSource = self
-       
         userProfileTableView.register(UINib(nibName: "TableViewCell", bundle: nil),forCellReuseIdentifier:"TableViewCell")
         configureTableView()
         userProfileTableView.separatorStyle = .none
-        
-        print("---View Controller view did load method is called")
         presenter = ViewPresenter(delegate:self)
-      
+        userDetailArray = (presenter.getData())!
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("--view Controller view Appear method is called---")
         retrieveMessages()
-    }
-    
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
         cell.cellLabel.text = userDetailArray[indexPath.row].name
         cell.userId = indexPath.row
-        cell.delegate = self as NavigationEditViewDelegate
+        cell.userImageView.image = presenter?.getuserImage(fileName : userDetailArray[indexPath.row].image! )
+        cell.addressLabel.text = userDetailArray[indexPath.row].address
+        cell.delegate = self
         return cell
     }
     
@@ -56,10 +42,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //TODO: Declare configureTableView here:
     func configureTableView(){
-        userProfileTableView.rowHeight = UITableViewAutomaticDimension
         userProfileTableView.estimatedRowHeight = 150
-        
-        
+        userProfileTableView.rowHeight = UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool
@@ -70,13 +54,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            userDetailArray.remove(at: indexPath.row)
-            //            userProfileTableView.deleteRows(at: [indexPath], with: .top)
+            presenter?.deleteRow(at: indexPath.row)
             userProfileTableView.reloadData()
         }
         
     }
-    
     
     func retrieveMessages(){
        userProfileTableView.reloadData();
@@ -88,14 +70,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 }
 
 extension ViewController : NavigationEditViewDelegate{
-    
     func editNavigation(user : UserDetail) {
         presenter?.moveToEdit(user: user)
     }
-    
     func viewNavigation(user : UserDetail) {
         presenter?.moveToView(user: user)
-        
     }
 }
 
@@ -113,4 +92,3 @@ extension ViewController : ViewControllerDelegate {
         navigationController?.pushViewController(myVC, animated: true)
     }
 }
-

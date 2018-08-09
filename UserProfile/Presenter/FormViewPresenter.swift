@@ -1,30 +1,55 @@
-//
-//  SubmitUserPresenter.swift
-//  UserProfile
-//
-//  Created by Daffodilmac-10 on 27/07/18.
-//  Copyright © 2018 Daffodilmac-10. All rights reserved.
-//
-
-
 protocol FormViewDelegate:class {
     func success()
     func failed (message:String)
     func prefilledUserDetail()
     func popImagePicker()
     func setUserImage(chosenImage : UIImage?)
+    func showUserImageAlertWithDelete()
+    func showUserImageAlertWithoutDelete()
+    func deleteUserImageConfirm()
 }
 
-
-//import Foundation
 import UIKit
 class FormViewPresenter{
     
-   weak var delegate : FormViewDelegate?
+    weak var delegate : FormViewDelegate?
+    var imageManager  : ImageManager?
     
     init(delegate: FormViewDelegate){
         self.delegate = delegate
+        imageManager = ImageManager()
     }
+    
+    //Take Decision of Prefilled details in the form view
+    func prefilled(user:UserDetail?){
+        if user != nil {
+            delegate?.prefilledUserDetail()
+        }
+    }
+    
+    //MARK:-Return the userDetail Object
+    func getUser(name:String?, address:String?, userId : Int?, phone : String?, dob : String? , email : String?, gender : String? , image : String?)->UserDetail{
+        let user = UserDetail()
+        user.name = name
+        user.address = address
+        user.userId = userId
+        user.image = image
+        user.phone = phone
+        user.dob = dob
+        user.email = email
+        user.gender = gender
+        return user
+    }
+    
+    //Check Validation of User
+    func checkValidation(user:UserDetail)->Bool{
+        if user.address.isEmpty || user.name.isEmpty || user.phone.isEmpty || user.email.isEmpty || user.dob.isEmpty{
+            return false
+        }
+        return true
+    }
+    
+    //Add the user to the UserDetailArray
     func addUser(userDetail: UserDetail){
         print("this method is called")
         if checkValidation(user: userDetail){
@@ -33,40 +58,49 @@ class FormViewPresenter{
             }else{
                 userDetailArray.append(userDetail)
             }
+            UserDefaults.standard.encode(for:userDetailArray, using: "userProfile")
             delegate?.success()
         }else{
             delegate?.failed(message: "fields cant be empty")
         }
     }
     
-    func checkValidation(user:UserDetail)->Bool{
-        if user.address.isEmpty || user.name.isEmpty {
-            return false
-        }
-        return true
-    }
-    
-    func prefilled(user:UserDetail?){
-        if user != nil {
-            delegate?.prefilledUserDetail()
+    //take decision of which image alert to show
+    func userImageButtonPerformed(isUserDefaultImage: Bool){
+        if isUserDefaultImage {
+            delegate?.showUserImageAlertWithDelete()
+        }else{
+            delegate?.showUserImageAlertWithoutDelete()
         }
     }
     
-    func getUser(name:String?, address:String?, userId : Int? , userImage : UIImage?)->UserDetail{
-        let user = UserDetail()
-        user.name = name
-        user.address = address
-        user.userId = userId
-        user.userImage = userImage
-        return user
-    }
-    
+    //decision to show image picker
     func showImagePicker(){
+        print("presenter image picker method is called")
         delegate?.popImagePicker()
     }
     
-    func userImage(chosenImage: UIImage?){
+    //take decision to set user image on image view on the form view
+    func userImage(chosenImage: UIImage ){
         delegate?.setUserImage(chosenImage: chosenImage)
     }
     
+    //Save User image to document directory
+    func saveUserImage(chosenImage: UIImage?, imageName: String)->String{
+        return (imageManager?.saveImage(chosenImage:chosenImage, imageName: imageName))!
+    }
+        
+    //Return UIImage object of user Image
+    func getUserImage(fileName : String)-> UIImage?{
+        return imageManager?.getImage(fileName:fileName)
+    }
+    
+    //Delete user image
+    func deleteUserImage(fileName : String){
+        imageManager?.deleteImage(fileName: fileName)
+        
+        delegate?.deleteUserImageConfirm()
+    }
 }
+
+

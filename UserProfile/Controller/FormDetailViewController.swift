@@ -1,10 +1,3 @@
-//
-//  FormDetailViewController.swift
-//  UserProfile
-//
-//  Created by Daffodilmac-10 on 30/07/18.
-//  Copyright © 2018 Daffodilmac-10. All rights reserved.
-//
 
 import UIKit
 
@@ -20,25 +13,16 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var userImage: UIImageView!
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         presenter = FormDetailViewPresenter(delegate: self)
         presenter?.viewDetail()
-        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-   
-    
-
-   
 }
+
 extension FormDetailViewController : FormDetailViewDelegate{
+    
+    //set the deatil in the form view 
     func showDetail(){
         nameLabel.text = userDetailArray[(user?.userId)!].name
         genderLabel.text = userDetailArray[(user?.userId)!].gender
@@ -46,6 +30,5 @@ extension FormDetailViewController : FormDetailViewDelegate{
         dobLabel.text = userDetailArray[(user?.userId)!].dob
         emailLabel.text = userDetailArray[(user?.userId)!].email
         addressLabel.text = userDetailArray[(user?.userId)!].address
-        userImage.image = userDetailArray[(user?.userId)!].userImage
     }
 }

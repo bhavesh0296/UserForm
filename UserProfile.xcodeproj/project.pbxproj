@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		272B64F0210EE770004C2859 /* FormDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272B64EF210EE770004C2859 /* FormDetailViewController.swift */; };
 		2772FA2C2107263B0004A629 /* UserProfile.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2772FA2A2107263B0004A629 /* UserProfile.xcdatamodeld */; };
+		278FD1DF211C0FD9001002FB /* ImageMangaer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278FD1DE211C0FD9001002FB /* ImageMangaer.swift */; };
 		27916AB72111877D00F81875 /* ViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27916AB62111877D00F81875 /* ViewPresenter.swift */; };
 		27916AB92111939300F81875 /* FormDetailViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27916AB82111939300F81875 /* FormDetailViewPresenter.swift */; };
 		27B324AC2105A9FF00BC8B6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B324AB2105A9FF00BC8B6C /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 		272B64EF210EE770004C2859 /* FormDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDetailViewController.swift; sourceTree = "<group>"; };
 		275B34D62106FF7E003A4A64 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		2772FA2B2107263B0004A629 /* UserProfile.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserProfile.xcdatamodel; sourceTree = "<group>"; };
+		278FD1DE211C0FD9001002FB /* ImageMangaer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMangaer.swift; sourceTree = "<group>"; };
 		27916AB62111877D00F81875 /* ViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPresenter.swift; sourceTree = "<group>"; };
 		27916AB82111939300F81875 /* FormDetailViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDetailViewPresenter.swift; sourceTree = "<group>"; };
 		27B324A82105A9FF00BC8B6C /* UserProfile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserProfile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				27B324CB2105DB4900BC8B6C /* UserDetail.swift */,
+				278FD1DE211C0FD9001002FB /* ImageMangaer.swift */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27916AB72111877D00F81875 /* ViewPresenter.swift in Sources */,
+				278FD1DF211C0FD9001002FB /* ImageMangaer.swift in Sources */,
 				2772FA2C2107263B0004A629 /* UserProfile.xcdatamodeld in Sources */,
 				27E737C0210B15F700C4341F /* FormViewPresenter.swift in Sources */,
 				27B324BF2105ADD500BC8B6C /* TableViewCell.swift in Sources */,

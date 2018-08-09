@@ -19,6 +19,8 @@ class TableViewCell: UITableViewCell {
     var delegate : NavigationEditViewDelegate?
     
     @IBOutlet weak var cellLabel: UILabel!
+    @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var addressLabel: UILabel!
     
     var userId : Int?  
     

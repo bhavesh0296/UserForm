@@ -4,6 +4,7 @@ protocol FormDetailViewDelegate : class{
 }
 
 import Foundation
+import UIKit
 class FormDetailViewPresenter{
     
     weak var delegate : FormDetailViewDelegate?
@@ -14,5 +15,9 @@ class FormDetailViewPresenter{
     
     func viewDetail(){
             delegate?.showDetail()
+    }
+    func getUserImage(fileName: String?)-> UIImage?{
+        let imageManager = ImageManager()
+        return imageManager.getImage(fileName: (fileName)!)
     }
 }

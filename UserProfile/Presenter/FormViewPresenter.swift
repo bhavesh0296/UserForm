@@ -14,6 +14,7 @@ class FormViewPresenter{
     
     weak var delegate : FormViewDelegate?
     var imageManager  : ImageManager?
+    var isAddUser = true
     
     init(delegate: FormViewDelegate){
         self.delegate = delegate
@@ -23,6 +24,7 @@ class FormViewPresenter{
     //Take Decision of Prefilled details in the form view
     func prefilled(user:UserDetail?){
         if user != nil {
+            isAddUser = false
             delegate?.prefilledUserDetail()
         }
     }
@@ -64,6 +66,31 @@ class FormViewPresenter{
             delegate?.failed(message: "fields cant be empty")
         }
     }
+    
+    //Add the user to the UserDetailArray
+    func addUser(userDetail: UserDetail, preUser: UserDetail){
+        print("this method is called")
+        if checkValidation(user: userDetail){
+            if isAddUser {
+                userDetailArray.append(userDetail)
+            }else{
+                preUser.name = userDetail.name
+                preUser.email = userDetail.email
+                preUser.dob = userDetail.dob
+                preUser.gender = userDetail.gender
+                preUser.image = userDetail.image
+                preUser.phone = userDetail.phone
+            }
+            UserDefaults.standard.encode(for:userDetailArray, using: "userProfile")
+            delegate?.success()
+        }else{
+            delegate?.failed(message: "fields cant be empty")
+        }
+    }
+    
+    
+    
+    
     
     //take decision of which image alert to show
     func userImageButtonPerformed(isUserDefaultImage: Bool){

@@ -29,7 +29,7 @@ class ViewPresenter {
         imageManager.deleteImage(fileName: userDetailArray[index].image!)
         userDetailArray.remove(at: index)
         UserDefaults.standard.encode(for:userDetailArray, using: "userProfile")
-       
+//        delegate
     }
     
     //return user image

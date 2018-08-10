@@ -4,7 +4,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
    
     @IBOutlet weak var userProfileTableView: UITableView!
     
+    @IBOutlet weak var searchBar: UISearchBar!
     var presenter : ViewPresenter!
+    var tableReloadData : [UserDetail]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,26 +20,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         configureTableView()
         userProfileTableView.separatorStyle = .none
         presenter = ViewPresenter(delegate:self)
-        userDetailArray = (presenter.getData())!
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         retrieveMessages()
+        searchBar.text=""
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
+//        cell.cellLabel.text = userDetailArray[indexPath.row].name
+//        cell.userId = indexPath.row
+//        cell.userImageView.image = presenter?.getuserImage(fileName : userDetailArray[indexPath.row].image! )
+//        cell.addressLabel.text = userDetailArray[indexPath.row].address
+//        cell.delegate = self
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
-        cell.cellLabel.text = userDetailArray[indexPath.row].name
+        cell.cellLabel.text = tableReloadData![indexPath.row].name
         cell.userId = indexPath.row
-        cell.userImageView.image = presenter?.getuserImage(fileName : userDetailArray[indexPath.row].image! )
-        cell.addressLabel.text = userDetailArray[indexPath.row].address
+        cell.userImageView.image = presenter?.getuserImage(fileName : tableReloadData![indexPath.row].image! )
+        cell.addressLabel.text = tableReloadData![indexPath.row].address
         cell.delegate = self
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userDetailArray.count
+        return tableReloadData!.count
     }
     
     //TODO: Declare configureTableView here:
@@ -61,7 +70,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func retrieveMessages(){
-       userProfileTableView.reloadData();
+        userDetailArray = (presenter.getData())!
+        tableReloadData = userDetailArray
+        userProfileTableView.reloadData();
     }
     
     @IBAction func goToFormAction(_ sender: Any) {
@@ -82,7 +93,7 @@ extension ViewController : ViewControllerDelegate {
     
     func goToEdit(user : UserDetail?) {
         let myVC = storyboard?.instantiateViewController(withIdentifier: "FormViewController") as! FormViewController
-        myVC.user = user
+        myVC.user = tableReloadData?[(user?.userId)!]
         navigationController?.pushViewController(myVC, animated: true)
     }
     
@@ -90,5 +101,19 @@ extension ViewController : ViewControllerDelegate {
         let myVC = storyboard?.instantiateViewController(withIdentifier: "FormDetailViewController") as! FormDetailViewController
         myVC.user = user
         navigationController?.pushViewController(myVC, animated: true)
+    }
+}
+
+//MARK :- UI Search Bar Methods
+extension ViewController : UISearchBarDelegate{
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            tableReloadData = userDetailArray
+        }else{
+            tableReloadData = userDetailArray.filter({(UserDetail)->Bool in
+                return UserDetail.name.lowercased().contains(searchText.lowercased())
+            })
+        }
+        userProfileTableView.reloadData()        
     }
 }

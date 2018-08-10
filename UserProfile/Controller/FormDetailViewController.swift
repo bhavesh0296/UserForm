@@ -30,5 +30,7 @@ extension FormDetailViewController : FormDetailViewDelegate{
         dobLabel.text = userDetailArray[(user?.userId)!].dob
         emailLabel.text = userDetailArray[(user?.userId)!].email
         addressLabel.text = userDetailArray[(user?.userId)!].address
+        userImage.image = presenter?.getUserImage(fileName: userDetailArray[(user?.userId)!].image)
+        
     }
 }

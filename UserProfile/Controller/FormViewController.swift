@@ -38,7 +38,7 @@ class FormViewController: UIViewController , UINavigationControllerDelegate, UII
         let user = formViewPresenter?.getUser(name:nameField.text, address:addressField.text, userId:self.user?.userId, phone: phoneField.text, dob: dobField.text, email: emailField.text, gender: "male" ,image: fileName)
         print(formViewPresenter)
         
-        formViewPresenter?.addUser(userDetail: user!)
+        formViewPresenter?.addUser(userDetail: user!, preUser : self.user!)
         print("submit action performed")
     }
    
@@ -104,16 +104,26 @@ extension FormViewController : FormViewDelegate{
     
     func prefilledUserDetail(){
         print("prefilled Form Method is called")
-        nameField.text = userDetailArray[(user?.userId)!].name
-        phoneField.text = userDetailArray[(user?.userId)!].phone
-        addressField.text = userDetailArray[(user?.userId)!].address
-        emailField.text = userDetailArray[(user?.userId)!].email
-        dobField.text = userDetailArray[(user?.userId)!].dob
-        chosenImage = formViewPresenter.getUserImage(fileName: userDetailArray[(user?.userId)!].image!)
+        nameField.text = user?.name
+        phoneField.text = user?.phone
+        addressField.text = user?.address
+        emailField.text = user?.email
+        dobField.text = user?.dob
+        chosenImage = formViewPresenter.getUserImage(fileName: (user?.image!)!)
         if chosenImage != nil {
             userImageButton.setBackgroundImage(chosenImage, for: .normal)
             isUserDefaultImage = true
         }
+//        nameField.text = userDetailArray[(user?.userId)!].name
+//        phoneField.text = userDetailArray[(user?.userId)!].phone
+//        addressField.text = userDetailArray[(user?.userId)!].address
+//        emailField.text = userDetailArray[(user?.userId)!].email
+//        dobField.text = userDetailArray[(user?.userId)!].dob
+//        chosenImage = formViewPresenter.getUserImage(fileName: userDetailArray[(user?.userId)!].image!)
+//        if chosenImage != nil {
+//            userImageButton.setBackgroundImage(chosenImage, for: .normal)
+//            isUserDefaultImage = true
+//        }
 //        userImage.image = userDetailArray[(user?.userId)!].userImage
 //        if userDetailArray[(user?.userId)!].gender == "male" {
 //            maleBtn.sendActions(for: .touchUpInside)
@@ -132,7 +142,7 @@ extension FormViewController : FormViewDelegate{
     }
     
     func showUserImageAlertWithDelete() {
-        let showImageAlert = UIAlertController(title: "Image Upload", message: "choose the option", preferredStyle: .alert)
+        let showImageAlert = UIAlertController(title: "Image Upload", message: "choose the option", preferredStyle: .actionSheet)
         let cameraAction = UIAlertAction(title: "camera", style: .default) { (action:UIAlertAction!) in
             print("camera button tapped");
         }
@@ -143,6 +153,7 @@ extension FormViewController : FormViewDelegate{
         let deleteAction = UIAlertAction(title: "delete", style: .destructive ) { (action:UIAlertAction!) in
             print("delete button tapped");
             self.formViewPresenter.deleteUserImage(fileName: userDetailArray[(self.user?.userId)!].image!);
+            self.isUserDefaultImage = true
         }
         let cancelAction = UIAlertAction(title: "cancel", style: .cancel ) { (action:UIAlertAction!) in
             print("cancel button tapped");
@@ -155,7 +166,7 @@ extension FormViewController : FormViewDelegate{
     }
     
     func showUserImageAlertWithoutDelete() {
-        let showImageAlert = UIAlertController(title: "Image Upload", message: "choose the option", preferredStyle: .alert)
+        let showImageAlert = UIAlertController(title: "Image Upload", message: "choose the option", preferredStyle: .actionSheet)
         let cameraAction = UIAlertAction(title: "camera", style: .default) { (action:UIAlertAction!) in
             print("camera button tapped");
         }
